@@ -7,20 +7,34 @@ document.getElementById("signinForm").addEventListener("submit", function (e) {
   // Get users from sessionStorage
   let users = JSON.parse(sessionStorage.getItem("Database_Users") || "[]");
 
-  // Check for a matching user
-  const user = users.find(
-    (u) => u.username === username && u.password === password
-  );
+  // Check if username exists
+  const user = users.find(u => u.username === username);
 
-  if (user) {
-    alert("Sign-in successful ✅");
-    
-    // Store current user in localStorage
-    localStorage.setItem("MyDB_CurrentUser", JSON.stringify(user));
-
-    // Redirect to dashboard (you can create dashboard.html later)
-    window.location.href = "dashboard.html";
-  } else {
-    alert("❌ Invalid username or password");
+  if (!user) {
+    showPopup("Username not found!", "error");
+    return;
   }
+
+  // Check if password matches
+  if (user.password !== password) {
+    showPopup("Incorrect password! Please try again.", "error");
+    return;
+  }
+
+  // If both match, redirect to dashboard
+  localStorage.setItem("MyDB_CurrentUser", JSON.stringify(user));
+  window.location.href = "dashboard.html";
 });
+
+// Function to show popups
+function showPopup(message, type) {
+  const popup = document.createElement("div");
+  popup.classList.add("popup", type);
+  popup.innerText = message;
+  
+  document.body.appendChild(popup);
+  
+  setTimeout(() => {
+    popup.remove();
+  }, 3000); // Remove popup after 3 seconds
+}
