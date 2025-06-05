@@ -1,0 +1,121 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1f3c88;
+  color: white;
+  padding: 1rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.auth-buttons button {
+  padding: 0.5rem 1rem;
+  background: #ffffff;
+  color: #1f3c88;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.auth-buttons button:hover {
+  background: #dbe9ff;
+}
+
+/* Main section */
+.main {
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+/* Intro */
+.intro h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.intro p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* About section */
+.about {
+  background: #fff;
+  padding: 2rem 1.5rem;
+  border-radius: 10px;
+  margin-top: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.about h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: #1f3c88;
+  color: white;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .intro h1 {
+    font-size: 1.8rem;
+  }
+
+  .about h2 {
+    font-size: 1.5rem;
+  }
+
+  .auth-buttons {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .auth-buttons button {
+    flex: 1;
+    max-width: 120px;
+  }
+
+  .main, .about {
+    padding: 1.2rem;
+  }
+}
