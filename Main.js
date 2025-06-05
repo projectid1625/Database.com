@@ -29,12 +29,3 @@ function checkSession() {
 
 // Run on page load
 checkSession();
-
-// Navigation handlers (if needed for buttons)
-function goToSignIn() {
-  window.location.href = 'signin.html';
-}
-
-function goToSignUp() {
-  window.location.href = 'signup.html';
-}
