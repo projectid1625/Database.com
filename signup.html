@@ -7,22 +7,31 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="auth-container">
-    <h1>Sign Up to MyDB Cloud</h1>
-    <form id="signupForm">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
-      
-      <select id="dbType" required>
-        <option value="">Choose Database Type</option>
-        <option value="1D">1D Database</option>
-        <option value="2D">2D Database</option>
-        <option value="3D">3D Database</option>
-      </select>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <h1 class="auth-title">Create Your Account</h1>
+      <p class="auth-subtitle">Join MyDB Cloud and choose your database type</p>
 
-      <button type="submit">Create Account</button>
-    </form>
-    <p>Already have an account? <a href="signin.html">Sign In</a></p>
+      <form id="signupForm" class="auth-form">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter username" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required />
+
+        <label for="dbType">Select Database Type</label>
+        <select id="dbType" required>
+          <option value="">-- Choose --</option>
+          <option value="1D">1D Database</option>
+          <option value="2D">2D Database</option>
+          <option value="3D">3D Database</option>
+        </select>
+
+        <button type="submit" class="auth-button">Sign Up</button>
+      </form>
+
+      <p class="auth-footer">Already have an account? <a href="signin.html">Sign In</a></p>
+    </div>
   </div>
 
   <script src="signup.js"></script>
