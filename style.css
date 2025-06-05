@@ -241,3 +241,32 @@ body {
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* Popup Styles */
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-weight: 600;
+  max-width: 90%;
+  z-index: 999;
+  text-align: center;
+}
+
+.popup.error {
+  background-color: #ff4d4d;  /* Red for error */
+  color: white;
+  border: 2px solid #ff1a1a;
+}
+
+.popup.success {
+  background-color: #4caf50;  /* Green for success */
+  color: white;
+  border: 2px solid #388e3c;
+}
