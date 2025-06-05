@@ -1,37 +1,40 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
-const { spawn } = require('child_process');
+// Check internet connection
+window.addEventListener('load', () => {
+  if (!navigator.onLine) {
+    alert('⚠️ No internet connection. Some features may not work.');
+  }
+});
 
-function createWindow() {
-
-  const win = new BrowserWindow({
-
-    width: 800, height: 600,
-
-    webPreferences: {
-
-      preload: path.join(__dirname, 'preload.js'),
-      contextIsolation: true,
-      nodeIntegration: false
-
-    }
-
-  });
-
-  win.loadFile('index.html');
-
-  ipcMain.on('to-python', (event, data) => {
-
-    const py = spawn('python', ['First_Page.py', data]);
-
-    py.stdout.on('data', (output) => {
-
-      event.sender.send('from-python', output.toString());
-
-    });
-
-  });
-
+// Load and parse Database_Users (You will fill sessionStorage from Google Sheets)
+let databaseUsers = [];
+try {
+  const data = sessionStorage.getItem('Database_Users');
+  if (data) {
+    databaseUsers = JSON.parse(data);
+    if (!Array.isArray(databaseUsers)) throw new Error('Invalid format');
+  }
+} catch (err) {
+  console.error('Failed to parse Database_Users:', err);
+  databaseUsers = [];
 }
 
-app.whenReady().then(createWindow);
+// Example function to check login session
+function checkSession() {
+  const activeUser = sessionStorage.getItem('activeUser');
+  if (activeUser) {
+    // Redirect or show user dashboard
+    window.location.href = 'dashboard.html'; // Change as needed
+  }
+}
+
+// Run on page load
+checkSession();
+
+// Navigation handlers (if needed for buttons)
+function goToSignIn() {
+  window.location.href = 'signin.html';
+}
+
+function goToSignUp() {
+  window.location.href = 'signup.html';
+}
