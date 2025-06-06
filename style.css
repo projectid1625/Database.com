@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #f0f4f8;
+  background: #f3f4f6;
   color: #333;
   line-height: 1.6;
 }
@@ -121,13 +121,24 @@ body {
 }
 
 .auth-container {
-  max-width: 400px;
-  margin: 4rem auto;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  max-width: 480px;
+  margin: 60px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.form-box h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #007BFF;
+}
+
+.form-box h2 {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #444;
 }
 
 .auth-container h1 {
@@ -245,24 +256,25 @@ body {
 /* Popup styling */
 .popup {
   position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 20px;
+  top: 30px;
+  right: 30px;
+  background-color: #e0f7fa;
+  border-left: 6px solid #007BFF;
+  padding: 16px 24px;
   border-radius: 8px;
-  font-weight: bold;
-  z-index: 999;
-  color: white;
-  background-color: #333;
-  opacity: 0.95;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 16px;
+  color: #333;
+  z-index: 9999;
+}
+
+.popup.error {
+  background-color: #ffe6e6;
+  border-left-color: #ff4d4d;
 }
 
 .popup.success {
   background-color: #4CAF50;
-}
-
-.popup.error {
-  background-color: #f44336;
 }
 
 .popup.hidden {
@@ -312,4 +324,37 @@ header {
   color: white;
   cursor: pointer;
   float: right;
+}
+
+.auth-container p {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
