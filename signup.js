@@ -1,52 +1,39 @@
-document.getElementById("signupForm").addEventListener("submit", function (e) {
+const form = document.getElementById("signupForm");
+const popup = document.getElementById("popup");
+
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
-  const dbType = document.getElementById("dbType").value;
 
-  // Get current users
-  let users = JSON.parse(sessionStorage.getItem("Database_Users") || "[]");
+  // Load users from sessionStorage
+  let users = JSON.parse(sessionStorage.getItem("Database_Users")) || [];
 
   // Check if username already exists
-  const existingUser = users.find(u => u.username === username);
-  if (existingUser) {
-    showPopup("❌ Username already exists. Please choose another one.", "error");
+  const exists = users.some(user => user.username === username);
+  if (exists) {
+    showPopup("❌ Username already taken!", "error");
     return;
   }
 
-  // Create new user object
-  const newUser = { username, password, dbType };
-
-  // Add to array and update sessionStorage
-  users.push(newUser);
+  // Add new user
+  users.push({ username, password });
   sessionStorage.setItem("Database_Users", JSON.stringify(users));
 
-  // Save to localStorage as logged in user
-  localStorage.setItem("MyDB_CurrentUser", JSON.stringify(newUser));
+  // Save current user to session
+  sessionStorage.setItem("currentUser", username);
 
-  // Show welcome and tutorial popups
-  showPopup("🎉 Welcome to MyDB Cloud!", "success");
-  
-  setTimeout(() => {
-    showPopup("📘 Tutorial: Your selected DB is " + dbType + ". You can now start using it!", "info");
-  }, 2000);
+  showPopup("✅ Welcome to MyDB Cloud! Redirecting...", "success");
 
-  // Redirect after tutorial popup
   setTimeout(() => {
     window.location.href = "dashboard.html";
-  }, 4500);
+  }, 2000);
 });
 
-// Function to show popups
 function showPopup(message, type) {
-  const popup = document.createElement("div");
-  popup.classList.add("popup", type);
-  popup.innerText = message;
-
-  document.body.appendChild(popup);
-
-  setTimeout(() => {
-    popup.remove();
-  }, 3000);
+  popup.textContent = message;
+  popup.className = `popup ${type}`;
+  popup.classList.remove("hidden");
+  setTimeout(() => popup.classList.add("hidden"), 3000);
 }
