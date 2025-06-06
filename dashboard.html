@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - MyDB Cloud</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header>
+      <h1>Welcome to MyDB Cloud</h1>
+      <p id="welcomeUser"></p>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+
+    <section class="actions">
+      <button onclick="location.href='create.html'">➕ Create New Database</button>
+      <button onclick="location.href='view.html'">📜 View My Databases</button>
+      <button onclick="location.href='tutorial.html'">🧠 How It Works</button>
+    </section>
+  </div>
+
+  <script>
+    // Load username from session
+    const user = sessionStorage.getItem("currentUser");
+    const welcome = document.getElementById("welcomeUser");
+
+    if (!user) {
+      // If not logged in, redirect
+      window.location.href = "signin.html";
+    } else {
+      welcome.textContent = `Hello, ${user}!`;
+    }
+
+    function logout() {
+      sessionStorage.removeItem("currentUser");
+      window.location.href = "signin.html";
+    }
+  </script>
+</body>
+</html>
