@@ -1,0 +1,140 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.dashboard {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e88e5;
+  color: #fff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dashboard-header h1 {
+  font-size: 1.8rem;
+}
+
+.dashboard-header button {
+  background: #fff;
+  color: #1e88e5;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dashboard-header button:hover {
+  background: #e3f2fd;
+}
+
+/* Main */
+.dashboard-main {
+  flex-grow: 1;
+  padding: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Welcome Box */
+.welcome-box {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.welcome-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.action-btn {
+  background: #1e88e5;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #1565c0;
+}
+
+/* Databases Section */
+.databases-list {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.databases-list h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.db-list-empty {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+/* Footer */
+.dashboard-footer {
+  text-align: center;
+  padding: 1rem;
+  background: #e3f2fd;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  
+  .dashboard-main {
+    padding: 1rem;
+  }
+
+  .action-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.4rem;
+  }
+  
+}
