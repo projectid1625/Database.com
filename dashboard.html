@@ -2,41 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - MyDB Cloud</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyDB Cloud Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
-<body>
-  <div class="dashboard-container">
-    <header>
-      <h1>Welcome to MyDB Cloud</h1>
-      <p id="welcomeUser"></p>
-      <button class="logout-btn" onclick="logout()">Logout</button>
-    </header>
+<body class="dashboard">
+  <header class="dashboard-header">
+    <h1>MyDB Cloud</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="welcome-box">
+      <h2>Welcome, <span id="usernamePlaceholder"></span> 👋</h2>
+      <p>Your cloud database hub is ready.</p>
+    </section>
 
     <section class="actions">
-      <button onclick="location.href='create.html'">➕ Create New Database</button>
-      <button onclick="location.href='view.html'">📜 View My Databases</button>
-      <button onclick="location.href='tutorial.html'">🧠 How It Works</button>
+      <button class="action-btn" onclick="location.href='create.html'">➕ Create New Database</button>
+      <button class="action-btn" onclick="location.href='script.html'">🧾 Generate Script</button>
     </section>
-  </div>
 
-  <script>
-    // Load username from session
-    const user = sessionStorage.getItem("currentUser");
-    const welcome = document.getElementById("welcomeUser");
+    <section class="databases-list">
+      <h3>Your Databases</h3>
+      <div class="db-list-empty">You haven’t created any databases yet.</div>
+      <!-- JS will populate this dynamically -->
+    </section>
+  </main>
 
-    if (!user) {
-      // If not logged in, redirect
-      window.location.href = "signin.html";
-    } else {
-      welcome.textContent = `Hello, ${user}!`;
-    }
+  <footer class="dashboard-footer">
+    © 2025 MyDB Cloud. All rights reserved.
+  </footer>
 
-    function logout() {
-      sessionStorage.removeItem("currentUser");
-      window.location.href = "signin.html";
-    }
-  </script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
