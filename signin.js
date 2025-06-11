@@ -1,4 +1,5 @@
 document.getElementById("signinForm").addEventListener("submit", function (e) {
+
   e.preventDefault();
 
   const username = document.getElementById("username").value.trim();
@@ -22,7 +23,7 @@ document.getElementById("signinForm").addEventListener("submit", function (e) {
   }
 
   // If both match, redirect to dashboard
-  localStorage.setItem("MyDB_CurrentUser", JSON.stringify(user));
+  sessionStorage.setItem("currentUser", username);
   window.location.href = "dashboard.html";
 });
 
