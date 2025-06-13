@@ -3,10 +3,13 @@ import { Database } from "./database_server.js";
 if ( window.location.pathname.includes('signup.html') ) {
 
   const form = document.getElementById("signupForm");
+  const popup = document.getElementById("popup");
 
   const submit_button = form.querySelector('button');
 
-  submit_button.addEventListener('click', () => {
+  submit_button.addEventListener('click', (e) => {
+
+    e.preventDefault();
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
@@ -19,7 +22,7 @@ if ( window.location.pathname.includes('signup.html') ) {
 
     if (exists) {
 
-      showPopup("❌ Username already taken!", "error"); return;
+      showPopup("❌ Username already taken!", "error", popup ); return;
       
     }
 
@@ -29,19 +32,13 @@ if ( window.location.pathname.includes('signup.html') ) {
     // Save current user to session
     sessionStorage.setItem("currentUser", username);
 
-    Database.Create_Data( 'Users', [ username, password ] )
+    Database.Create_Data( 'Users', [ username, password ] );
 
-    showPopup("Loading...", "success");
+    showPopup( "✅ Successfully Signed Up 👍", 'success', popup );
 
-    setTimeout(() => {
+    return setTimeout(() => {
 
-      showPopup("✅ Welcome to MyDB Cloud! Redirecting...", "success");
-
-    },5000);
-
-    setTimeout(() => {
-
-      window.location.href = "dashboard.html";
+      window.location.href = "./dashboard.html";
 
     }, 2000);
 
@@ -49,9 +46,7 @@ if ( window.location.pathname.includes('signup.html') ) {
 
 };
 
-function showPopup(message, type) {
-
-  const popup = document.getElementById("popup");
+function showPopup( message, type, popup ) {
 
   popup.textContent = message;
   popup.className = `popup ${type}`;

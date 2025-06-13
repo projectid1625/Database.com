@@ -1,8 +1,26 @@
 // Check internet connection
 window.addEventListener('load', () => {
-  if (!navigator.onLine) {
+
+  if ( ! ( window.location.pathname.includes( 'index.html' ) ) ) {
+
+    if ( window.location.pathname.endsWith('/') ) {
+
+      window.location.href = window.location.pathname + 'index.html'
+
+    } else {
+
+      window.location.href = window.location.pathname + '/index.html'
+
+    };
+
+  };
+
+  if ( !navigator.onLine ) {
+
     alert('⚠️ No internet connection. Some features may not work.');
+
   }
+  
 });
 
 // Load and parse Database_Users (You will fill sessionStorage from Google Sheets)
