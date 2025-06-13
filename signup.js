@@ -32,7 +32,7 @@ if ( window.location.pathname.includes('signup.html') ) {
     // Save current user to session
     sessionStorage.setItem("currentUser", username);
 
-    Create_Users( new_user, WEB_APP_URL );
+    // Create_Users( new_user, WEB_APP_URL );
 
     setTimeout(() => {
 

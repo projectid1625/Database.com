@@ -2,7 +2,51 @@
 
 import { showPopup } from "./signup.js";
 
-const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbzD_SxNovC5Sg8_24bp2xsz6kj8wuobAu5oLZX2ieo7vDKIQyCWi9UpIGm2J-JvBZw6/exec";
+const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbwFF1_l3an_J4Yvr_OfxH0c5NQJQFdffYRz2xardflAQhZQWQGZx8H_6RyGlPtALET_/exec";
+
+const Database = {
+
+    request_url: WEB_APP_URL,
+
+    Send_request: ( data_type, store_data, _arguments_ ) => {
+
+        const request = new XMLHttpRequest();
+
+        request.open( "GET", Database.request_url + '?type=' + data_type + _arguments_ );
+
+        request.onload = () => { sessionStorage.setItem( store_data, request.responseText ); };
+
+        request.send( null );
+
+    },
+
+    Read_Data: ( data_location, category ) => {
+
+        Database.Send_request( 'Read', data_location, '&category=' + category );
+
+    },
+
+    Update_Data: ( category, cell, data ) => {
+
+        Database.Send_request( 'Update', 'DATABASE', '&category=' + category + '&cell=' + cell
+        + '&status=100' + '&data=' + data );
+
+    },
+
+    Create_Data: ( category, data ) => {
+
+        Database.Send_request( 'Create', 'DATABASE', '&category=' + category + '&data=' +
+        Database.Json.stringify( data ) );
+
+    },
+
+    Delete_Data: ( category, cell ) => {
+
+        Database.Send_request( 'Delete', 'DATABASE', '&category=' + category + '&cell=' + cell );
+
+    }
+
+};
 
 function Extract_Users_Data() {
 
@@ -52,7 +96,7 @@ if ( window.location.pathname.includes('index.html') ) {
 
     if ( sessionStorage.getItem('Database_Users') == null ) {
 
-        Extract_Users_Data();
+        // Extract_Users_Data();
 
     };
 
