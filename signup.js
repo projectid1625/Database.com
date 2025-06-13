@@ -1,39 +1,64 @@
-const form = document.getElementById("signupForm");
-const popup = document.getElementById("popup");
+import { WEB_APP_URL, Create_Users } from "./database_server.js";
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+if ( window.location.pathname.includes('signup.html') ) {
 
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value;
+  const form = document.getElementById("signupForm");
 
-  // Load users from sessionStorage
-  let users = JSON.parse(sessionStorage.getItem("Database_Users")) || [];
+  const submit_button = form.querySelector('button');
 
-  // Check if username already exists
-  const exists = users.some(user => user.username === username);
-  if (exists) {
-    showPopup("❌ Username already taken!", "error");
-    return;
-  }
+  submit_button.addEventListener('click', () => {
 
-  // Add new user
-  users.push({ username, password });
-  sessionStorage.setItem("Database_Users", JSON.stringify(users));
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-  // Save current user to session
-  sessionStorage.setItem("currentUser", username);
+    // Load users from sessionStorage
+    let users = JSON.parse(sessionStorage.getItem("Database_Users")) || [];
 
-  showPopup("✅ Welcome to MyDB Cloud! Redirecting...", "success");
+    // Check if username already exists
+    const exists = users.some(user => user.username == username);
 
-  setTimeout(() => {
-    window.location.href = "dashboard.html";
-  }, 2000);
-});
+    if (exists) {
+
+      showPopup("❌ Username already taken!", "error"); return;
+      
+    }
+
+    // Add new user
+
+    const new_user = { username, password };
+    users.push(new_user);
+    sessionStorage.setItem("Database_Users", JSON.stringify(users));
+
+    // Save current user to session
+    sessionStorage.setItem("currentUser", username);
+
+    Create_Users( new_user, WEB_APP_URL );
+
+    setTimeout(() => {
+
+      showPopup("✅ Welcome to MyDB Cloud! Redirecting...", "success");
+
+    },5000);
+
+    setTimeout(() => {
+
+      window.location.href = "dashboard.html";
+
+    }, 2000);
+
+  });
+
+};
 
 function showPopup(message, type) {
+
+  const popup = document.getElementById("popup");
+
   popup.textContent = message;
   popup.className = `popup ${type}`;
   popup.classList.remove("hidden");
   setTimeout(() => popup.classList.add("hidden"), 3000);
-}
+
+};
+
+export { showPopup };
