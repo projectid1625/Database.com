@@ -1,8 +1,6 @@
 // import database_users -->
 
-import { showPopup } from "./signup.js";
-
-const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbwFF1_l3an_J4Yvr_OfxH0c5NQJQFdffYRz2xardflAQhZQWQGZx8H_6RyGlPtALET_/exec";
+const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbx3Gb4R1-2fIMW6dXjnae8fqkcjstqj7sL7iQASotF7Vm5HmDBKGQVylxZfTVFwhRwq/exec";
 
 const Database = {
 
@@ -33,6 +31,13 @@ const Database = {
 
     },
 
+    Update_Multi_Data: ( category, cell, data ) => {
+
+        Database.Send_request( 'Update', 'DATABASE', '&category=' + category + '&cell=' + cell
+        + '&status=200' + '&data=' + data );
+
+    },
+
     Create_Data: ( category, data ) => {
 
         Database.Send_request( 'Create', 'DATABASE', '&category=' + category + '&data=' +
@@ -44,49 +49,77 @@ const Database = {
 
         Database.Send_request( 'Delete', 'DATABASE', '&category=' + category + '&cell=' + cell );
 
+    },
+
+    Json: {
+
+        parse: ( Data ) => {
+
+            var new_text = '';
+            var new_array = new Array();
+
+            for ( var a = 1; a < Data.length - 1; a++ ) {
+
+                if ( Data.charAt( a ) == '~' ) { new_array.push( new_text ); new_text = ''; }
+                else if ( Data.charAt( a ) == '`' ) { new_text += ' '; }
+                else { new_text += Data.charAt( a ); }
+
+            }; new_array.push( new_text ); return new_array;
+
+        },
+
+        stringify: ( data ) => {
+
+            var text = '';
+            var changed_data = new Array();
+
+            for ( var d = 0; d < data.length; d++ ) { data[ d ] = ( data[ d ] ).toString(); };
+
+            for ( var b = 0; b < data.length; b++ ) {
+
+                text = '';
+
+                for ( var c = 0; c < data[ b ].length; c++ ) {
+
+                    if ( data[ b ].charAt( c ) == ' ' ) { text += '`' }
+                    else { text += data[ b ].charAt( c ); }
+
+                }; changed_data.push( text );
+
+            }; data = changed_data; changed_data = null;
+            
+            var new_data = '[';
+
+            for ( var a = 0; a < data.length - 1; a++ ) {
+                
+                new_data += data[ a ];
+                new_data += '~';
+
+            }; new_data += data[ data.length - 1 ] + ']';
+
+            return new_data;
+
+        },
+
+        Stringify_Column: ( Column_Name, data_location ) => {
+
+            if ( sessionStorage.getItem( data_location ) == null ) { return -1; };
+
+            var data = JSON.parse( sessionStorage.getItem( data_location ) );
+
+            data = data[ 0 ];
+
+            data = Object.keys( data ).indexOf( Column_Name );
+
+            if ( data < 0 || data >= Database.Json.alphabets.length ) { return -1; };
+
+            return Database.Json.alphabets[ data ];
+
+        },
+
+        alphabets: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
     }
-
-};
-
-function Extract_Users_Data() {
-
-    fetch( WEB_APP_URL ).then(response => response.json()).then(data => {
-
-        sessionStorage.setItem("Database_Users", JSON.stringify(data));
-    
-    }).catch(error => {
-    
-        console.error("Error fetching users:", error);
-    
-    });
-
-};
-
-function Create_Users( newUser, URL_web_App ) {
-
-    fetch( URL_web_App, {
-        
-        method: "POST",
-        body: JSON.stringify(newUser),
-        headers: { "Content-Type": "application/json" }
-
-      }
-      
-    ).then(response => response.json()).then(result => {
-
-        if (result.success) {
-
-            showPopup("Signed Up Successfully !",'success');
-
-        } else {
-
-            const e = "Error:" + result.error;
-
-            showPopup(e, 'error');
-
-        }
-
-    }).catch(err => console.error("Request failed", err));
 
 };
 
@@ -96,10 +129,10 @@ if ( window.location.pathname.includes('index.html') ) {
 
     if ( sessionStorage.getItem('Database_Users') == null ) {
 
-        // Extract_Users_Data();
+        Database.Read_Data( 'Database_Users', 'Users' );
 
     };
 
 };
 
-export { WEB_APP_URL, Create_Users };
+export { Database };

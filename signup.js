@@ -1,4 +1,4 @@
-import { WEB_APP_URL, Create_Users } from "./database_server.js";
+import { Database } from "./database_server.js";
 
 if ( window.location.pathname.includes('signup.html') ) {
 
@@ -23,16 +23,15 @@ if ( window.location.pathname.includes('signup.html') ) {
       
     }
 
-    // Add new user
-
-    const new_user = { username, password };
-    users.push(new_user);
+    users.push({username:username, password:password});
     sessionStorage.setItem("Database_Users", JSON.stringify(users));
 
     // Save current user to session
     sessionStorage.setItem("currentUser", username);
 
-    // Create_Users( new_user, WEB_APP_URL );
+    Database.Create_Data( 'Users', [ username, password ] )
+
+    showPopup("Loading...", "success");
 
     setTimeout(() => {
 
