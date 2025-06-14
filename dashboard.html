@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MyDB Cloud Dashboard</title>
   <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
+
 <body class="dashboard">
+
   <header class="dashboard-header">
-    <h1>MyDB Cloud</h1>
-    <button id="logoutBtn">Logout</button>
+    <div class="logo">MyDB Cloud</div>
+    <div class="user-controls">
+
+      <!-- In your header, right side -->
+      <button id="profileBtn" class="btn secondary">
+        <i class="fas fa-user-circle" style="margin-right: 6px;"></i> Profile
+      </button>
+
+      <button id="logoutBtn" class="btn primary">Log Out</button>
+
+    </div>
   </header>
 
   <main class="dashboard-main">
@@ -30,10 +43,45 @@
     </section>
   </main>
 
+  <!-- Profile Sidebar Panel -->
+  <div id="profileSidebar" class="profile-sidebar hidden">
+    <div class="profile-header">
+      <h2>My Profile</h2>
+      <button id="closeProfile" class="close-btn">&times;</button>
+    </div>
+    <div class="profile-content">
+      <label>Username:</label>
+      <input type="text" id="profileUsername" readonly>
+
+      <label>Password:</label>
+      <div class="password-container">
+        <input type="password" id="profilePassword" readonly>
+        <i id="togglePassword" class="fas fa-eye"></i>
+      </div>
+
+      <button id="changeUsernameBtn" class="btn primary">Change Username</button>
+      <button id="changePasswordBtn" class="btn primary">Change Password</button>
+    </div>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div id="changeModalOverlay" class="modal-overlay">
+    <div class="modal-box">
+      <label id="modalLabel" for="modalInput"></label>
+      <input type="text" id="modalInput" />
+      <button id="modalConfirmBtn">Confirm</button>
+    </div>
+  </div>
+
+  <!-- Popup Message Box -->
+  <div id="popup" class="popup hidden">
+    <span id="popupMessage"></span>
+  </div>
+
   <footer class="dashboard-footer">
     © 2025 MyDB Cloud. All rights reserved.
   </footer>
 
-  <script src="dashboard.js"></script>
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+import { Database } from "./database_server.js";
+
 const currentUser = sessionStorage.getItem("currentUser");
 const logout_btn = document.getElementById('logoutBtn');
 
@@ -16,4 +18,173 @@ logout_btn.addEventListener('click', () => {
 
     window.location.href = './index.html';
 
+});
+
+//Popup
+
+function showPopup(message, type) {
+  const popup = document.getElementById("popup");
+  const popupMessage = document.getElementById("popupMessage");
+
+  popupMessage.textContent = message;
+  popup.className = `popup show ${type}`;
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 3000);
+}
+
+// Show profile panel when button is clicked
+document.getElementById('profileBtn').addEventListener('click', () => {
+
+  const databaseUsers = JSON.parse(sessionStorage.getItem('Database_Users')) || [];
+  const currentUser = sessionStorage.getItem('currentUser');
+
+  const found = databaseUsers.find(u => u.username === currentUser);
+  if (found) {
+    document.getElementById('profileUsername').value = found.username;
+    document.getElementById('profilePassword').value = found.password;
+  }
+});
+
+// Toggle password visibility
+document.getElementById('togglePassword').addEventListener('click', () => {
+  const passField = document.getElementById('profilePassword');
+  const icon = document.getElementById('togglePassword');
+  
+  if (passField.type === 'password') {
+    passField.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  } else {
+    passField.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  }
+});
+
+const profileBtn = document.getElementById('profileBtn');
+const profileSidebar = document.getElementById('profileSidebar');
+const closeProfile = document.getElementById('closeProfile');
+const toggleEye = document.getElementById('togglePassword');
+const passInput = document.getElementById('profilePassword');
+
+// Toggle sidebar visibility
+profileBtn.addEventListener('click', () => {
+  profileSidebar.classList.toggle('visible');
+
+  if (profileSidebar.classList.contains('visible')) {
+    const users = JSON.parse(sessionStorage.getItem('Database_Users')) || [];
+    const currentUser = sessionStorage.getItem('currentUser');
+    const user = users.find(u => u.username === currentUser);
+
+    if (user) {
+      document.getElementById('profileUsername').value = user.username;
+      passInput.value = user.password;
+      passInput.type = 'password';
+      toggleEye.className = 'fas fa-eye';
+    }
+  }
+});
+
+// Close button inside panel
+closeProfile.addEventListener('click', () => {
+  profileSidebar.classList.remove('visible');
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modalOverlay = document.getElementById("changeModalOverlay");
+  const modalLabel = document.getElementById("modalLabel");
+  const modalInput = document.getElementById("modalInput");
+  const confirmBtn = document.getElementById("modalConfirmBtn");
+
+  const showModal = (labelText, isPassword = false) => {
+    modalLabel.textContent = labelText;
+    modalInput.value = "";
+    modalInput.type = isPassword ? "password" : "text";
+    modalOverlay.style.display = "flex";
+  };
+
+  const closeModal = () => {
+    modalOverlay.style.display = "none";
+  };
+
+  // Change Username Button Click
+  document.getElementById("changeUsernameBtn").addEventListener("click", () => {
+    showModal("Enter your new username:");
+  });
+
+  // Change Password Button Click
+  document.getElementById("changePasswordBtn").addEventListener("click", () => {
+    showModal("Enter your new password:", true);
+  });
+
+  // Confirm Button Click
+  confirmBtn.addEventListener("click", () => {
+    const newValue = modalInput.value.trim();
+    if (newValue !== "") {
+
+      const dbUsersString = sessionStorage.getItem("Database_Users");
+      const currentUser = sessionStorage.getItem("currentUser");
+
+      const dbUsers = JSON.parse(dbUsersString);
+      const index = dbUsers.findIndex(user => user.username === currentUser);
+
+      if ( index == -1 ) {
+
+        showPopup( 'The Current User does not found ! ', 'error' ); return closeModal();
+
+      };
+      
+      if ( modalLabel.textContent.includes('username') ) {
+
+        const check = dbUsers.findIndex( user => user.username == newValue );
+
+        if ( check != -1 ) {
+
+          showPopup('Sorry ! This Username is used...', 'error');
+
+        } else {
+
+          dbUsers[index].username = newValue;
+          sessionStorage.setItem( 'Database_Users', JSON.stringify( dbUsers ) );
+
+          sessionStorage.setItem( 'currentUser', newValue )
+
+          var cell = index + 2;
+          cell = cell.toString();
+          cell = 'A' + cell;
+
+          Database.Update_Data( 'Users', cell, newValue );
+
+          showPopup( 'Username changed successfully', 'success' );
+
+        };
+
+      } else {
+
+        dbUsers[index].password = newValue;
+        sessionStorage.setItem( 'Database_Users', JSON.stringify( dbUsers ) );
+
+        var cell = index + 2;
+        cell = cell.toString();
+        cell = 'B' + cell;
+
+        Database.Update_Data( 'Users', cell, newValue );
+
+        showPopup( 'Password changed successfully', 'success' );
+
+      };
+
+      
+      return setTimeout( () => {
+
+        closeModal(); return window.location.reload();
+
+      },3000 );
+
+    };
+
+  });
+  
 });

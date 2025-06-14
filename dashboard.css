@@ -19,29 +19,49 @@ body.dashboard {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1e88e5;
-  color: #fff;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 16px 24px;
+  background-color: #1e88e5;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-.dashboard-header h1 {
-  font-size: 1.8rem;
-}
-
-.dashboard-header button {
-  background: #fff;
-  color: #1e88e5;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+.logo {
+  font-size: 1.5rem;
   font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  color: #ffffff;
 }
 
-.dashboard-header button:hover {
-  background: #e3f2fd;
+.user-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn.primary {
+  background-color: white;
+  color: lightcoral;
+  font-weight: bold;
+}
+
+.btn.primary:hover {
+  background-color: lightgrey;
+}
+
+.btn.secondary {
+  background-color: #e4e4e4;
+  color: #333;
+  font-weight: 400;
+}
+
+.btn.secondary:hover {
+  background-color: #cfcfcf;
 }
 
 /* Main */
@@ -137,4 +157,161 @@ body.dashboard {
     font-size: 1.4rem;
   }
   
+}
+
+/* Profile */
+
+/* Sidebar Panel */
+.profile-sidebar {
+  position: fixed;
+  top: 65px; /* Adjust based on your header height */
+  right: 0;
+  width: 300px;
+  height: calc(90% - 52px); /* full height minus header */
+  background-color: #f4f4f4;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  transform: translateX(100%);
+}
+
+.profile-sidebar.visible {
+  transform: translateX(0);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.profile-content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-content label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.profile-content input {
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container i {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  cursor: pointer;
+}
+
+#changeUsernameBtn {
+  position: absolute;
+  top: 65%;
+  right: 5vw;
+  cursor: pointer;
+}
+
+#changePasswordBtn {
+  position: absolute;
+  top: 78%;
+  right: 5vw;
+  cursor: pointer;
+}
+
+/* Modal */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 30px 20px 20px;
+  width: 300px;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-box label {
+  font-weight: 500;
+}
+
+.modal-box input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#modalConfirmBtn {
+  align-self: flex-start;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: #0066cc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Popup */
+
+.popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #323232;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 16px;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.popup.show {
+  opacity: 1;
+}
+
+.popup.success {
+  background-color: #28a745;
+}
+
+.popup.error {
+  background-color: #dc3545;
+}
+
+.popup.info {
+  background-color: #007bff;
 }
