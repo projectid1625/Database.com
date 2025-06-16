@@ -1,6 +1,6 @@
 // import database_users -->
 
-const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbx3Gb4R1-2fIMW6dXjnae8fqkcjstqj7sL7iQASotF7Vm5HmDBKGQVylxZfTVFwhRwq/exec";
+const WEB_APP_URL ="https://script.google.com/macros/s/AKfycby3AOdBs8CcU3M9MZz1puoIDp3f3aL0J0WcmJR0-0HIRMyG-qqg3SFS8EPoe3TKm4vQ/exec";
 
 const Database = {
 
@@ -26,8 +26,10 @@ const Database = {
 
     Update_Data: ( category, cell, data ) => {
 
+        const uri_data = encodeURIComponent(data);
+
         Database.Send_request( 'Update', 'DATABASE', '&category=' + category + '&cell=' + cell
-        + '&status=100' + '&data=' + data );
+        + '&status=100' + '&data=' + uri_data );
 
     },
 
@@ -40,8 +42,10 @@ const Database = {
 
     Create_Data: ( category, data ) => {
 
+        const uri_data = data.map( item => encodeURIComponent(item) );
+
         Database.Send_request( 'Create', 'DATABASE', '&category=' + category + '&data=' +
-        Database.Json.stringify( data ) );
+        Database.Json.stringify( uri_data ) );
 
     },
 
