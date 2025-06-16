@@ -315,3 +315,28 @@ body.dashboard {
 .popup.info {
   background-color: #007bff;
 }
+
+.cancel-btn {
+  background-color: white;
+  color: red;
+  border: 2px solid red;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  left: 10.2rem;
+  bottom: 3rem;
+  width: 37%;
+  height: 10%;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: red;
+  color: white;
+}

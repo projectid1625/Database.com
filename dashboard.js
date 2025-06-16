@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalLabel = document.getElementById("modalLabel");
   const modalInput = document.getElementById("modalInput");
   const confirmBtn = document.getElementById("modalConfirmBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
 
   const showModal = (labelText, isPassword = false) => {
     modalLabel.textContent = labelText;
@@ -186,5 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
   });
+
+  cancelBtn.addEventListener( "click", closeModal );
   
 });
