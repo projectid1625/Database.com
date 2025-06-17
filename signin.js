@@ -1,3 +1,14 @@
+window.onload = () => {
+
+  const currentUser = localStorage.getItem( 'currentUser' );
+  const users = JSON.parse( sessionStorage.getItem( 'Database_Users' ) );
+
+  const user = users.find( u => u.username === currentUser );
+
+  if ( user ) { window.location.href = "dashboard.html"; };
+
+};
+
 document.getElementById("signinForm").addEventListener("submit", function (e) {
 
   e.preventDefault();
@@ -23,7 +34,7 @@ document.getElementById("signinForm").addEventListener("submit", function (e) {
   }
 
   // If both match, redirect to dashboard
-  sessionStorage.setItem("currentUser", username);
+  localStorage.setItem("currentUser", username);
   window.location.href = "dashboard.html";
 });
 

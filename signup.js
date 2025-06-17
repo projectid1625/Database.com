@@ -30,7 +30,7 @@ if ( window.location.pathname.includes('signup.html') ) {
     sessionStorage.setItem("Database_Users", JSON.stringify(users));
 
     // Save current user to session
-    sessionStorage.setItem("currentUser", username);
+    localStorage.setItem("currentUser", username);
 
     Database.Create_Data( 'Users', [ username, password ] );
 

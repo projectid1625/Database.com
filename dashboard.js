@@ -1,6 +1,6 @@
 import { Database } from "./database_server.js";
 
-const currentUser = sessionStorage.getItem("currentUser");
+const currentUser = localStorage.getItem("currentUser");
 const logout_btn = document.getElementById('logoutBtn');
 
 if (!currentUser) { window.location.href = "./signin.html"; }
@@ -14,7 +14,7 @@ else {
 
 logout_btn.addEventListener('click', () => {
 
-    sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser');
 
     window.location.href = './index.html';
 
@@ -38,7 +38,7 @@ function showPopup(message, type) {
 document.getElementById('profileBtn').addEventListener('click', () => {
 
   const databaseUsers = JSON.parse(sessionStorage.getItem('Database_Users')) || [];
-  const currentUser = sessionStorage.getItem('currentUser');
+  const currentUser = localStorage.getItem('currentUser');
 
   const found = databaseUsers.find(u => u.username === currentUser);
   if (found) {
@@ -75,7 +75,7 @@ profileBtn.addEventListener('click', () => {
 
   if (profileSidebar.classList.contains('visible')) {
     const users = JSON.parse(sessionStorage.getItem('Database_Users')) || [];
-    const currentUser = sessionStorage.getItem('currentUser');
+    const currentUser = localStorage.getItem('currentUser');
     const user = users.find(u => u.username === currentUser);
 
     if (user) {
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (newValue !== "") {
 
       const dbUsersString = sessionStorage.getItem("Database_Users");
-      const currentUser = sessionStorage.getItem("currentUser");
+      const currentUser = localStorage.getItem("currentUser");
 
       const dbUsers = JSON.parse(dbUsersString);
       const index = dbUsers.findIndex(user => user.username === currentUser);
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
           dbUsers[index].username = newValue;
           sessionStorage.setItem( 'Database_Users', JSON.stringify( dbUsers ) );
 
-          sessionStorage.setItem( 'currentUser', newValue )
+          localStorage.setItem( 'currentUser', newValue )
 
           var cell = index + 2;
           cell = cell.toString();
