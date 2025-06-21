@@ -13,26 +13,26 @@ if ( window.location.pathname.includes('signup.html') ) {
 
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value;
 
     // Load users from sessionStorage
     let users = JSON.parse(sessionStorage.getItem("Database_Users")) || [];
 
     // Check if username already exists
     const exists = users.some(user => user.username == username);
+    const exists2 = users.some(user => user.email == email);
 
-    if (exists) {
+    if (exists) { showPopup("❌ Username already taken!", "error", popup ); return; };
 
-      showPopup("❌ Username already taken!", "error", popup ); return;
-      
-    }
+    if (exists2) { showPopup("❌ This email is already used!", "error", popup); return; };
 
-    users.push({username:username, password:password});
+    users.push({username:username, password:password, email:email});
     sessionStorage.setItem("Database_Users", JSON.stringify(users));
 
     // Save current user to session
     localStorage.setItem("currentUser", username);
 
-    Database.Create_Data( 'Users', [ username, password ] );
+    Database.Create_Data( 'Users', [ username, password, email ] );
 
     showPopup( "✅ Successfully Signed Up 👍", 'success', popup );
 
