@@ -358,3 +358,18 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+.forgot-link {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.forgot-link a {
+  color: #007BFF;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.forgot-link a:hover {
+  text-decoration: underline;
+}

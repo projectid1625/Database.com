@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Password | MyDB Cloud</title>
+  <link rel="stylesheet" href="./css/forgot.css" />
+</head>
+<body>
+
+  <div class="forgot-container">
+    <h2>Forgot Your Password?</h2>
+
+    <form id="forgotForm">
+      <div class="form-group">
+        <label for="email">Registered Email Address</label>
+        <input type="email" id="email" required />
+      </div>
+      <button type="submit" id="sendOtpBtn">Send OTP</button>
+    </form>
+
+    <div id="otpSection">
+      <div class="form-group">
+        <label for="otp">Enter OTP</label>
+        <input type="text" id="otp" maxlength="6" />
+      </div>
+      <button id="verifyOtpBtn">Verify OTP</button>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div id="popup" class="popup"></div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <p>© 2025 MyDB Cloud. All rights reserved. | <a href="#">Privacy</a> | <a href="#">Terms</a></p>
+    <p class="follow">After you enter OTP you will be signined in and after that you can go to profile and you can view your details you forgot</p>
+  </footer>
+
+  <script type="module" src="./js/forgot.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { Database } from "./database_server.js";
+import { Database } from "../database_server.js";
 
 if ( window.location.pathname.includes('signup.html') ) {
 

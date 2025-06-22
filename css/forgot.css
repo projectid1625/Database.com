@@ -1,0 +1,139 @@
+/* Page background and body setup */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #eef1f6, #e0e6f2);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Main container */
+  .forgot-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    width: 90%;
+    margin: auto;
+    margin-top: 80px;
+  }
+  
+  .forgot-container h2 {
+    margin-bottom: 24px;
+    color: #222;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  /* Input fields */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #444;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  input:focus {
+    border-color: #007BFF;
+  }
+  
+  /* Buttons */
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* OTP Section */
+  #otpSection {
+    margin-top: 20px;
+    display: none;
+  }
+  
+  /* Popup styles */
+  .popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 9999;
+  }
+  
+  .popup.show {
+    display: block;
+    animation: fadeInOut 3s ease-in-out;
+  }
+  
+  .popup.success {
+    background-color: #28a745;
+  }
+  
+  .popup.error {
+    background-color: #dc3545;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-20px); }
+  }
+  
+  /* Footer */
+  .page-footer {
+    margin-top: auto;
+    background-color: #f8f9fb;
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    border-top: 1px solid #ddd;
+  }
+  
+  .page-footer a {
+    color: #007BFF;
+    text-decoration: none;
+    margin: 0 6px;
+  }
+  
+  .page-footer a:hover {
+    text-decoration: underline;
+  }
+  
+  footer p.follow {
+    color: red;
+    font-size: 17.5px;
+  }

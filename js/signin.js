@@ -5,7 +5,7 @@ window.onload = () => {
 
   const user = users.find( u => u.username === currentUser );
 
-  if ( user ) { window.location.href = "dashboard.html"; };
+  if ( user ) { window.location.href = "./dashboard.html"; };
 
 };
 
@@ -35,7 +35,7 @@ document.getElementById("signinForm").addEventListener("submit", function (e) {
 
   // If both match, redirect to dashboard
   localStorage.setItem("currentUser", username);
-  window.location.href = "dashboard.html";
+  window.location.href = "./dashboard.html";
 });
 
 // Function to show popups

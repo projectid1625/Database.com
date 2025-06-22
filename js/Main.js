@@ -41,7 +41,7 @@ function checkSession() {
   const activeUser = sessionStorage.getItem('activeUser');
   if (activeUser) {
     // Redirect or show user dashboard
-    window.location.href = 'dashboard.html'; // Change as needed
+    window.location.href = './dashboard.html'; // Change as needed
   }
 }
 

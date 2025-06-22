@@ -1,4 +1,4 @@
-import { Database } from "./database_server.js";
+import { Database } from "../database_server.js";
 
 const currentUser = localStorage.getItem("currentUser");
 const logout_btn = document.getElementById('logoutBtn');
@@ -44,6 +44,7 @@ document.getElementById('profileBtn').addEventListener('click', () => {
   if (found) {
     document.getElementById('profileUsername').value = found.username;
     document.getElementById('profilePassword').value = found.password;
+    document.getElementById('profileEmail').value = found.email;
   }
 });
 
