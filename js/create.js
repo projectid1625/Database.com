@@ -1,50 +1,41 @@
+import { Database } from "../database_server.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     const createForm = document.getElementById("createForm");
   
     createForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      const dbName = document.getElementById("dbName").value.trim();
       const securityCode = document.getElementById("securityCode").value.trim();
       const dbType = document.getElementById("dbType").value;
-      const owner = sessionStorage.getItem("currentUser");
+      const owner = localStorage.getItem("currentUser");
+      const popup = document.getElementById("popup");
   
-      if (!securityCode || !dbType) {
-        showPopup("Please fill in all fields.", "error");
+      if (!securityCode || !dbType || !dbName) {
+        showPopup("Please fill in all fields.", "error", popup);
         return;
-      }
-  
-      // Construct the database object
-      const newDatabase = {
-        security_code: encodeURIComponent(securityCode),
-        database_type: encodeURIComponent(dbType),
-        owner: encodeURIComponent(owner),
-        data: encodeURIComponent(JSON.stringify([]))  // Empty database
       };
-  
-      try {
-        // 🔒 Leave this section for you to integrate Google Sheets API or Apps Script request
-        // Example placeholder (you will replace with actual URL and method)
-        /*
-        const response = await fetch("YOUR_GOOGLE_SCRIPT_URL", {
-          method: "POST",
-          body: JSON.stringify(newDatabase),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
-        const result = await response.json();
-        */
-  
-        // Simulate success (remove when real request is added)
-        showPopup("Database created successfully!", "success");
-  
-        // Optional: redirect after success
-        // window.location.href = "dashboard.html";
-  
-      } catch (error) {
-        showPopup("Failed to create database. Please try again.", "error");
-        console.error(error);
-      }
+
+      function generateSecureApiKey() {
+        const array = new Uint8Array(32);
+        crypto.getRandomValues(array);
+        return Array.from(array, dec => ('0' + dec.toString(16)).slice(-2)).join('');
+      };
+
+      const api_key = generateSecureApiKey();
+
+      var newDatabase = [ dbName, api_key, securityCode, dbType, owner ];
+
+      newDatabase = newDatabase.map(item => { return encodeURIComponent( item ); });
+
+      sessionStorage.setItem( 'create_database', JSON.stringify( newDatabase ) );
+
+      Database.Create_Data( 'Databases', newDatabase );
+
+      return window.location.assign( "./createTable.html" );
+
     });
+    
   });
   

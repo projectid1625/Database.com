@@ -3,7 +3,6 @@ import { WEB_APP_URL } from "../database_server.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const forgotForm = document.getElementById("forgotForm");
-    const sendOtpBtn = document.getElementById("sendOtpBtn");
     const otpSection = document.getElementById("otpSection");
     const verifyOtpBtn = document.getElementById("verifyOtpBtn");
     const popup = document.getElementById("popup");

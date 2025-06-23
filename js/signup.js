@@ -32,7 +32,11 @@ if ( window.location.pathname.includes('signup.html') ) {
     // Save current user to session
     localStorage.setItem("currentUser", username);
 
-    Database.Create_Data( 'Users', [ username, password, email ] );
+    var signed_up_user = [ username, password, email ];
+
+    signed_up_user = signed_up_user.map(item => { return encodeURIComponent(item); });
+
+    Database.Create_Data( 'Users', signed_up_user );
 
     showPopup( "✅ Successfully Signed Up 👍", 'success', popup );
 

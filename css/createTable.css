@@ -1,0 +1,133 @@
+/* General Reset & Typography */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+  }
+  
+  header {
+    background-color: #1976d2;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  /* Button Styling */
+  button {
+    padding: 0.6rem 1.2rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  #addColumnBtn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  #addRowBtn {
+    background-color: #03a9f4;
+    color: white;
+  }
+  
+  #saveBtn {
+    background-color: #388e3c;
+    color: white;
+  }
+  
+  #cancelBtn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Layout Containers */
+  main {
+    padding: 1.5rem;
+  }
+  
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+  
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    padding: 1rem;
+    max-height: 70vh;
+  }
+  
+  /* Table Styling */
+  table {
+    width: max-content;
+    min-width: 300px;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    border: 1px solid #aaa;
+    padding: 0.8rem 1rem;
+    min-width: 120px;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  table td {
+    background-color: #fafafa;
+  }
+  
+  table td:focus {
+    background-color: #fffde7;
+    outline: 2px solid #1976d2;
+  }
+  
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    header {
+      font-size: 1.2rem;
+    }
+  
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+    }
+  
+    table th,
+    table td {
+      font-size: 0.9rem;
+      padding: 0.6rem;
+    }
+  }
+  
+  .delete-btn {
+    margin-left: 6px;
+    background: none;
+    border: none;
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+  }  
