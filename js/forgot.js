@@ -3,7 +3,6 @@ import { WEB_APP_URL } from "../database_server.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const forgotForm = document.getElementById("forgotForm");
-    const otpSection = document.getElementById("otpSection");
     const verifyOtpBtn = document.getElementById("verifyOtpBtn");
     const popup = document.getElementById("popup");
   
@@ -31,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.text())
         .then(result => {
           showPopup("OTP sent to your email.", "success", popup);
+          const otpSection = document.getElementById("otpSection");
           otpSection.style.display = "block";
         })
         .catch(error => {

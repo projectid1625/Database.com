@@ -74,7 +74,7 @@ body {
   
   /* Table Styling */
   table {
-    width: max-content;
+    width: 100%;
     min-width: 300px;
     border-collapse: collapse;
   }
@@ -125,9 +125,34 @@ body {
   
   .delete-btn {
     margin-left: 6px;
-    background: none;
+    background: transparent;
     border: none;
     color: red;
     font-size: 14px;
     cursor: pointer;
+  }
+
+  th {
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .column-header-text {
+    flex-grow: 1;
+    outline: none;
+  }
+
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .column-header-text {
+    flex-grow: 1;
+    outline: none;
+    word-break: break-word;
   }  

@@ -1,6 +1,6 @@
 // Read dbType from 'create_database' sessionStorage
 const dbData = JSON.parse(sessionStorage.getItem("create_database") || "[]");
-const dbType = dbData[2] || "1D";
+const dbType = dbData[2] || "2D";
 
 const table = document.getElementById("dbTable");
 const addColumnBtn = document.getElementById("addColumnBtn");
@@ -11,29 +11,43 @@ let rowCount = 3; // default starting rows
 
 // Create table headers
 function createHeaders() {
-    const thead = table.createTHead();
-    const row = thead.insertRow();
-  
-    // Add control column header
-    const controlTh = document.createElement("th");
-    controlTh.textContent = " ";
-    row.appendChild(controlTh);
-  
-    // Add rest of the editable column headers
-    for (let i = 0; i < colCount; i++) {
-      const th = document.createElement("th");
-      th.contentEditable = true;
-      th.textContent = `Column ${i + 1}`;
-  
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "❌";
-      deleteBtn.className = "delete-btn";
-      deleteBtn.onclick = () => deleteColumnAt(i + 1); // +1 for skipping control column
-      th.appendChild(deleteBtn);
-  
-      row.appendChild(th);
-    }
-}  
+  const thead = table.createTHead();
+  const row = thead.insertRow();
+
+  // Add control column header
+  const controlTh = document.createElement("th");
+  controlTh.textContent = " ";
+  row.appendChild(controlTh);
+
+  // Add rest of the editable column headers
+  for (let i = 0; i < colCount; i++) {
+    const th = document.createElement("th");
+
+    // Create a wrapper div
+    const headerWrapper = document.createElement("div");
+    headerWrapper.className = "header-wrapper";
+
+    // Editable span for column name
+    const headerSpan = document.createElement("span");
+    headerSpan.contentEditable = true;
+    headerSpan.textContent = `Column ${i + 1}`;
+    headerSpan.className = "column-header-text";
+
+    // Delete button
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "❌";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.onclick = () => deleteColumnAt(i + 1); // Adjust as needed
+
+    // Append both to wrapper
+    headerWrapper.appendChild(headerSpan);
+    headerWrapper.appendChild(deleteBtn);
+
+    // Append wrapper to th
+    th.appendChild(headerWrapper);
+    row.appendChild(th);
+  };
+}; 
 
 // Add a new editable row
 function addRow() {
@@ -63,37 +77,43 @@ function addRow() {
 
 // Add a new column (for 2D and 3D)
 function addColumn() {
-    colCount++;
-  
-    // Add new header cell
-    const headerRow = table.tHead.rows[0];
-    const newTh = document.createElement("th");
-    newTh.contentEditable = true;
-    newTh.textContent = `Column ${colCount}`;
-  
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "❌";
-    deleteBtn.className = "delete-btn";
-    deleteBtn.onclick = () => deleteColumnAt(headerRow.cells.length - 1); // correct column index
-  
-    newTh.appendChild(deleteBtn);
-    headerRow.appendChild(newTh);
-  
-    let tbody = table.tBodies[0];
-    if (!tbody) {
-      tbody = table.createTBody();
+  colCount++;
+
+  // Add new header cell
+  const headerRow = table.tHead.rows[0];
+  const newTh = document.createElement("th");
+
+  // Create wrapper div inside th
+  const headerWrapper = document.createElement("div");
+  headerWrapper.className = "header-wrapper";
+
+  const headerSpan = document.createElement("span");
+  headerSpan.contentEditable = true;
+  headerSpan.textContent = `Column ${colCount}`;
+  headerSpan.className = "column-header-text";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "❌";
+  deleteBtn.className = "delete-btn";
+  deleteBtn.onclick = () => deleteColumnAt(headerRow.cells.length - 1);
+
+  headerWrapper.appendChild(headerSpan);
+  headerWrapper.appendChild(deleteBtn);
+  newTh.appendChild(headerWrapper);
+  headerRow.appendChild(newTh);
+
+  // Add new cell in each row
+  const tbody = table.tBodies[0];
+  Array.from(tbody.rows).forEach((row) => {
+    const cell = row.insertCell(-1);
+    cell.contentEditable = true;
+    cell.classList.add("editable-cell");
+
+    if (dbType === "3D") {
+      add3DHoverEffect(cell);
     }
-  
-    Array.from(tbody.rows).forEach((row) => {
-      const cell = row.insertCell(-1);
-      cell.contentEditable = true;
-      cell.classList.add("editable-cell");
-  
-      if (dbType === "3D") {
-        add3DHoverEffect(cell);
-      }
-    });
-}  
+  });
+};
 
 // 3D cell hover effect
 function add3DHoverEffect(cell) {
@@ -118,7 +138,6 @@ function buildTable() {
 
   if (dbType === "2D" || dbType === "3D") {
     addColumnBtn.classList.remove("hidden");
-    deleteColumnBtn.classList.remove("hidden");
   }
 }
 
@@ -142,7 +161,7 @@ function deleteRowAt(index) {
     if (index >= 0 && index < tbody.rows.length) {
       tbody.deleteRow(index);
     }
-}  
+}
 
 // Button actions
 addRowBtn.addEventListener("click", addRow);
@@ -150,3 +169,27 @@ addColumnBtn.addEventListener("click", addColumn);
 
 // Start building
 buildTable();
+
+document.getElementById("saveBtn").addEventListener("click", () => {
+  const headers = [];
+  const headerRow = table.tHead.rows[0];
+  for (let i = 1; i < headerRow.cells.length; i++) {
+    headers.push(headerRow.cells[i].textContent.trim()); // skip control column (index 0)
+  }
+
+  const data = [];
+  const tbody = table.tBodies[0];
+  Array.from(tbody.rows).forEach(row => {
+    const rowObj = {};
+    for (let i = 1; i < row.cells.length; i++) {
+      const key = headers[i - 1]; // match header index
+      const value = row.cells[i].textContent.trim();
+      rowObj[key] = value;
+    }
+    data.push(rowObj);
+  });
+
+  // Save to sessionStorage
+  sessionStorage.setItem("database_table", JSON.stringify(data));
+  alert("Database saved to sessionStorage!");
+});
