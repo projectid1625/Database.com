@@ -1,3 +1,5 @@
+import { Database } from "../database_server.js";
+
 // Read dbType from 'create_database' sessionStorage
 const dbData = JSON.parse(sessionStorage.getItem("create_database") || "[]");
 const dbType = dbData[2] || "2D";
@@ -191,5 +193,27 @@ document.getElementById("saveBtn").addEventListener("click", () => {
 
   // Save to sessionStorage
   sessionStorage.setItem("database_table", JSON.stringify(data));
-  alert("Database saved to sessionStorage!");
+
+  sessionStorage.removeItem( 'databases_conf' );
+  
+  setTimeout( () => {
+
+    alert( 'Database Created Successfully ! ');
+
+    return window.location.assign( "./dashboard.html" );
+
+  },1000 );
+  
 });
+
+window.onload = () => {
+
+  if ( sessionStorage.getItem( 'create_database' ) != null ) {
+
+    const Data = JSON.parse( sessionStorage.getItem( 'create_database' ) );
+
+    Database.Create_Data( 'Databases', Data );
+
+  };
+
+};

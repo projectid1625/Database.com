@@ -192,3 +192,85 @@ document.addEventListener("DOMContentLoaded", () => {
   cancelBtn.addEventListener( "click", closeModal );
   
 });
+
+window.onload = () => {
+
+  if ( sessionStorage.getItem( 'database_table' ) != null ) {
+
+    const database = JSON.parse( sessionStorage.getItem( "create_database" ) );
+    const data_of_database = sessionStorage.getItem( "database_table" );
+
+    const data = [ 'Create', database[ 1 ], data_of_database ];
+
+    // Creation..
+
+    fetch( Database.request_url, {
+
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+
+    }).then(res => res.text()).then(response => {
+
+      console.log("Server says:", response);
+
+    }).catch(err => {
+
+      console.error("Failed:", err);
+      alert( 'Database Creation Failed !' );
+      
+    });
+
+    sessionStorage.removeItem( 'database_table' );
+    sessionStorage.removeItem( 'create_database' );
+
+  };
+
+  if ( sessionStorage.getItem( 'databases_conf' ) == null ) {
+
+    Database.Read_Data( 'databases_conf', 'Databases' );
+
+  };
+
+  start_listing();
+
+  function start_listing() {
+
+    setTimeout( () => {
+
+      if ( sessionStorage.getItem( 'databases_conf' ) != null ) {
+
+        const databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
+        const currentUser = localStorage.getItem("currentUser");
+        const section = document.querySelector(".databases-list");
+        const placeholder = section.querySelector(".db-list-empty");
+
+        const userDBs = databases_conf.filter(db => db.owner === currentUser);
+
+        if (userDBs.length > 0) {
+          placeholder.remove();
+      
+          userDBs.forEach((db) => {
+            const card = document.createElement("div");
+            card.className = "db-card";
+      
+            card.innerHTML = `
+              <h4>📁 ${db.name} </h4>
+              <p>Type: ${db.database_type} Database</p>
+              <p><strong>API Key:</strong> ${db.api_key}</p>
+              <p><strong>Security Code:</strong> ${db.security_code}</p>
+            `;
+      
+            section.appendChild(card);
+          });
+        }
+
+      } else { return start_listing(); };
+
+    },2000 );
+
+  };
+
+};

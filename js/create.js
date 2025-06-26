@@ -23,15 +23,39 @@ document.addEventListener("DOMContentLoaded", () => {
         return Array.from(array, dec => ('0' + dec.toString(16)).slice(-2)).join('');
       };
 
-      const api_key = generateSecureApiKey();
+      var api_key = generateSecureApiKey();
+
+      check_api_key();
+
+      function check_api_key() {
+
+        try {
+        
+          const databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
+  
+          const catch_match = databases_conf.some(key => key.api_key == api_key);
+  
+          if (catch_match) {
+
+            api_key = generateSecureApiKey();
+
+          };
+  
+        } catch (error) {
+  
+          alert( error );
+  
+          return window.location.assign( './dashboard.html' );
+          
+        };
+
+      };
 
       var newDatabase = [ dbName, api_key, securityCode, dbType, owner ];
 
       newDatabase = newDatabase.map(item => { return encodeURIComponent( item ); });
 
       sessionStorage.setItem( 'create_database', JSON.stringify( newDatabase ) );
-
-      Database.Create_Data( 'Databases', newDatabase );
 
       return window.location.assign( "./createTable.html" );
 
