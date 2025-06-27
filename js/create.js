@@ -1,7 +1,13 @@
-import { Database } from "../database_server.js";
-
 document.addEventListener("DOMContentLoaded", () => {
     const createForm = document.getElementById("createForm");
+
+    const dashboardBtn = document.getElementById( 'dashboardBtn' );
+
+    dashboardBtn.addEventListener( "click", () => {
+
+      return window.location.assign( './dashboard.html' );
+
+    });
   
     createForm.addEventListener("submit", async (e) => {
       e.preventDefault();

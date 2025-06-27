@@ -2,7 +2,7 @@ import { Database } from "../database_server.js";
 
 // Read dbType from 'create_database' sessionStorage
 const dbData = JSON.parse(sessionStorage.getItem("create_database") || "[]");
-const dbType = dbData[2] || "2D";
+const dbType = dbData[3] || "2D";
 
 const table = document.getElementById("dbTable");
 const addColumnBtn = document.getElementById("addColumnBtn");
@@ -10,6 +10,10 @@ const addRowBtn = document.getElementById("addRowBtn");
 
 let colCount = dbType === "1D" ? 1 : 5;
 let rowCount = 3; // default starting rows
+
+if (dbType === "1D") {
+  document.getElementById("addColumnBtn").style.display = "none";
+};
 
 // Create table headers
 function createHeaders() {
@@ -36,14 +40,18 @@ function createHeaders() {
     headerSpan.className = "column-header-text";
 
     // Delete button
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "❌";
-    deleteBtn.className = "delete-btn";
-    deleteBtn.onclick = () => deleteColumnAt(i + 1); // Adjust as needed
+    if ( dbType !== "1D" ) {
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "❌";
+      deleteBtn.className = "delete-btn";
+      deleteBtn.onclick = () => deleteColumnAt(i + 1); // Adjust as needed
+      headerWrapper.appendChild(deleteBtn);
+
+    };
 
     // Append both to wrapper
     headerWrapper.appendChild(headerSpan);
-    headerWrapper.appendChild(deleteBtn);
 
     // Append wrapper to th
     th.appendChild(headerWrapper);
@@ -94,13 +102,17 @@ function addColumn() {
   headerSpan.textContent = `Column ${colCount}`;
   headerSpan.className = "column-header-text";
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "❌";
-  deleteBtn.className = "delete-btn";
-  deleteBtn.onclick = () => deleteColumnAt(headerRow.cells.length - 1);
+  if ( dbType !== "1D" ) {
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "❌";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.onclick = () => deleteColumnAt(headerRow.cells.length - 1);
+    headerWrapper.appendChild(deleteBtn);
+
+  };
 
   headerWrapper.appendChild(headerSpan);
-  headerWrapper.appendChild(deleteBtn);
   newTh.appendChild(headerWrapper);
   headerRow.appendChild(newTh);
 
@@ -144,19 +156,21 @@ function buildTable() {
 }
 
 function deleteColumnAt(index) {
-    // Don't allow deleting control column (index 0)
-    if (colCount <= 1 || index === 0) return;
-  
-    const headerRow = table.tHead.rows[0];
-    headerRow.deleteCell(index);
-  
-    const tbody = table.tBodies[0];
-    Array.from(tbody.rows).forEach(row => {
-      row.deleteCell(index);
-    });
-  
-    colCount--;
-}  
+  const table = document.getElementById("dbTable");
+  for (let i = 0; i < table.rows.length; i++) {
+    table.rows[i].deleteCell(index);
+  }
+
+  // Re-assign delete buttons to correct columns
+  const headerRow = table.rows[0];
+  for (let j = 0; j < headerRow.cells.length; j++) {
+    const headerCell = headerRow.cells[j];
+    const deleteBtn = headerCell.querySelector(".delete-column");
+    if (deleteBtn) {
+      deleteBtn.onclick = () => deleteColumnAt(j);
+    }
+  }
+};
   
 function deleteRowAt(index) {
     const tbody = table.tBodies[0];
@@ -206,7 +220,7 @@ document.getElementById("saveBtn").addEventListener("click", () => {
   
 });
 
-window.onload = () => {
+/* window.onload = () => {
 
   if ( sessionStorage.getItem( 'create_database' ) != null ) {
 
@@ -216,4 +230,4 @@ window.onload = () => {
 
   };
 
-};
+}; */
