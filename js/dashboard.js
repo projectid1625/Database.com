@@ -197,34 +197,29 @@ window.onload = () => {
 
   if ( sessionStorage.getItem( 'database_table' ) != null ) {
 
-    const database = JSON.parse( sessionStorage.getItem( "create_database" ) );
     const data_of_database = sessionStorage.getItem( "database_table" );
+    const api_key = sessionStorage.getItem( 'api_key' );
 
-    const data = [ 'Create', database[ 1 ], data_of_database ];
+    const data = [ api_key, data_of_database ];
 
     // Creation..
 
-    fetch( Database.request_url, {
+    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLScM7asS2Unrka8Js5mXj1m3niYmLpge9n6-HHZTMnHtlxLC8w/formResponse";
 
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+    const entryId = "entry.1731731696";
+    const formData = new FormData();
 
-    }).then(res => res.text()).then(response => {
+    formData.append(entryId, JSON.stringify(data));
 
-      console.log("Server says:", response);
-
-    }).catch(err => {
-
-      console.error("Failed:", err);
-      alert( 'Database Creation Failed !' );
-      
+    fetch(formUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
     });
 
     sessionStorage.removeItem( 'database_table' );
     sessionStorage.removeItem( 'create_database' );
+    sessionStorage.removeItem( 'api_key' );
 
   };
 

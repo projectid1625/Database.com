@@ -220,7 +220,7 @@ document.getElementById("saveBtn").addEventListener("click", () => {
   
 });
 
-/* window.onload = () => {
+window.onload = () => {
 
   if ( sessionStorage.getItem( 'create_database' ) != null ) {
 
@@ -230,4 +230,4 @@ document.getElementById("saveBtn").addEventListener("click", () => {
 
   };
 
-}; */
+};

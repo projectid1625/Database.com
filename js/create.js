@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       newDatabase = newDatabase.map(item => { return encodeURIComponent( item ); });
 
       sessionStorage.setItem( 'create_database', JSON.stringify( newDatabase ) );
+      sessionStorage.setItem( 'api_key', api_key );
 
       return window.location.assign( "./createTable.html" );
 
