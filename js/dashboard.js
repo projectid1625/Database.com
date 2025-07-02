@@ -256,6 +256,10 @@ window.onload = () => {
               <p>Type: ${db.database_type} Database</p>
               <p><strong>API Key:</strong> ${db.api_key}</p>
               <p><strong>Security Code:</strong> ${db.security_code}</p>
+              <div class="db-actions">
+                <button class="edit-btn" id="${db.name}" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+                <button class="delete-btn" id="${db.name}" title="Delete"><i class="fas fa-trash-alt"></i></button>
+              </div>
             `;
       
             section.appendChild(card);
@@ -267,5 +271,38 @@ window.onload = () => {
     },2000 );
 
   };
+
+  setTimeout( () => {
+
+    const delete_buttons = document.querySelectorAll(".delete-btn");
+
+    console.log( delete_buttons );
+
+  },2000 );
+
+  // delete_buttons.forEach(btn => {
+
+  //   btn.addEventListener("click", () => {
+  
+  //     var databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
+  //     var index = databases_conf.findIndex( element => element.name == btn.id );
+  //     databases_conf.splice( index, 1 );
+  //     databases_conf = JSON.stringify( databases_conf );
+  //     sessionStorage.setItem( 'databases_conf', databases_conf );
+  //     index += 2;
+  
+  //     console.log( index );
+  
+  //     Database.Delete_Data( 'Databases', index );
+  
+  //   });
+  
+  // });
+  
+  // document.querySelectorAll(".edit-btn").forEach(btn => {
+  //   btn.addEventListener("click", () => {
+  //     // Edit
+  //   });
+  // });  
 
 };

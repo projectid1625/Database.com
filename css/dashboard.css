@@ -12,6 +12,7 @@ body.dashboard {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -360,4 +361,20 @@ body.dashboard {
   margin: 4px 0;
   font-size: 0.95rem;
   color: #555;
+}
+
+.db-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 16px;
+  color: #555;
+  transition: color 0.2s ease;
+  position: relative;
+  left: 36vw;
+}
+
+.db-actions button:hover {
+  color: #d9534f; /* red for delete, or just highlight both */
 }
