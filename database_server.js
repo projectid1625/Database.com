@@ -127,16 +127,4 @@ const Database = {
 
 };
 
-// when app starts ==>
-
-if ( window.location.pathname.includes('index.html') ) {
-
-    if ( sessionStorage.getItem('Database_Users') == null ) {
-
-        Database.Read_Data( 'Database_Users', 'Users' );
-
-    };
-
-};
-
 export { Database, WEB_APP_URL };

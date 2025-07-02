@@ -1,6 +1,12 @@
 // Check internet connection
 window.addEventListener('load', () => {
 
+  if ( !navigator.onLine ) {
+
+    alert('⚠️ No internet connection. Some features may not work.');
+
+  };
+
   if ( ! ( window.location.pathname.includes( 'index.html' ) ) ) {
 
     if ( window.location.pathname.endsWith('/') ) {
@@ -13,13 +19,15 @@ window.addEventListener('load', () => {
 
     };
 
+  } else {
+
+    if ( sessionStorage.getItem( 'Database_Users' ) == null ) {
+
+      window.location.assign( './Loading.html' );
+
+    };
+
   };
-
-  if ( !navigator.onLine ) {
-
-    alert('⚠️ No internet connection. Some features may not work.');
-
-  }
   
 });
 
