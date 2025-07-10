@@ -289,7 +289,7 @@ window.onload = () => {
             delete_button.addEventListener( 'click', ( btn ) => {
 
               var databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
-              var index = databases_conf.findIndex( element => element.name == btn.id );
+              var index = databases_conf.findIndex( element => element.name == btn.currentTarget.id );
               const api_key = databases_conf[ index ].api_key;
               databases_conf.splice( index, 1 );
               databases_conf = JSON.stringify( databases_conf );
