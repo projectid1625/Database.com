@@ -250,19 +250,83 @@ window.onload = () => {
           userDBs.forEach((db) => {
             const card = document.createElement("div");
             card.className = "db-card";
-      
-            card.innerHTML = `
-              <h4>📁 ${db.name} </h4>
-              <p>Type: ${db.database_type} Database</p>
-              <p><strong>API Key:</strong> ${db.api_key}</p>
-              <p><strong>Security Code:</strong> ${db.security_code}</p>
-              <div class="db-actions">
-                <button class="edit-btn" id="${db.name}" title="Edit"><i class="fas fa-pencil-alt"></i></button>
-                <button class="delete-btn" id="${db.name}" title="Delete"><i class="fas fa-trash-alt"></i></button>
-              </div>
-            `;
+
+            const name_card = document.createElement( 'h4' );
+            name_card.innerHTML = db.name;
+
+            const database_type_card = document.createElement( 'p' );
+            database_type_card.innerHTML = 'Type: ' +  db.database_type + ' Database';
+
+            const api_key_card = document.createElement( 'p' );
+            api_key_card.innerHTML = `<strong>API Key:</strong> ${db.api_key}`;
+
+            const security_code_card = document.createElement( 'p' );
+            security_code_card.innerHTML = `<strong>Security Code:</strong> ${db.security_code}`;
+
+            const action_box = document.createElement( 'div' );
+            action_box.className = 'db-actions';
+
+            const delete_button = document.createElement( 'button' );
+            delete_button.className = 'delete-btn';
+            delete_button.id = db.name;
+            delete_button.title = 'Delete';
+
+            const delete_button_icon = document.createElement( 'i' );
+            delete_button_icon.className = 'fas fa-trash-alt';
+
+            delete_button.appendChild( delete_button_icon );
+
+            const Edit_button = document.createElement( 'button' );
+            Edit_button.className = 'edit-btn';
+            Edit_button.id = db.name;
+            Edit_button.title = 'Edit';
+
+            const Edit_button_icon = document.createElement( 'i' );
+            Edit_button_icon.className = 'fas fa-pencil-alt';
+
+            Edit_button.appendChild( Edit_button_icon );
+
+            delete_button.addEventListener( 'click', ( btn ) => {
+
+              var databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
+              var index = databases_conf.findIndex( element => element.name == btn.id );
+              const api_key = databases_conf[ index ].api_key;
+              databases_conf.splice( index, 1 );
+              databases_conf = JSON.stringify( databases_conf );
+              sessionStorage.setItem( 'databases_conf', databases_conf );
+          
+              Database.Delete_Database( api_key );
+
+              setTimeout( () => {
+
+                return window.location.reload();
+
+              },2000);
+
+            });
+
+            Edit_button.addEventListener( 'click', ( btn ) => {
+
+              var databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
+              var index = databases_conf.findIndex( element => element.name == btn.id );
+
+              console.log( databases_conf[ index ][ 'api_key' ] );
+
+              // Edit Table
+
+            });
+
+            action_box.appendChild( Edit_button );
+            action_box.appendChild( delete_button );
+
+            card.appendChild( name_card );
+            card.appendChild( database_type_card );
+            card.appendChild( api_key_card );
+            card.appendChild( security_code_card );
+            card.appendChild( action_box );
       
             section.appendChild(card);
+
           });
         }
 
@@ -271,38 +335,5 @@ window.onload = () => {
     },2000 );
 
   };
-
-  setTimeout( () => {
-
-    const delete_buttons = document.querySelectorAll(".delete-btn");
-
-    console.log( delete_buttons );
-
-  },2000 );
-
-  // delete_buttons.forEach(btn => {
-
-  //   btn.addEventListener("click", () => {
-  
-  //     var databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
-  //     var index = databases_conf.findIndex( element => element.name == btn.id );
-  //     databases_conf.splice( index, 1 );
-  //     databases_conf = JSON.stringify( databases_conf );
-  //     sessionStorage.setItem( 'databases_conf', databases_conf );
-  //     index += 2;
-  
-  //     console.log( index );
-  
-  //     Database.Delete_Data( 'Databases', index );
-  
-  //   });
-  
-  // });
-  
-  // document.querySelectorAll(".edit-btn").forEach(btn => {
-  //   btn.addEventListener("click", () => {
-  //     // Edit
-  //   });
-  // });  
 
 };
