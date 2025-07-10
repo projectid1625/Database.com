@@ -294,14 +294,28 @@ window.onload = () => {
               databases_conf.splice( index, 1 );
               databases_conf = JSON.stringify( databases_conf );
               sessionStorage.setItem( 'databases_conf', databases_conf );
+
+              if ( sessionStorage.getItem( 'DATABASE' ) != null ) {
+
+                sessionStorage.removeItem( 'DATABASE' );
+
+              };
+
+              function wait() {
+
+                setTimeout( () => {
+
+                  if ( sessionStorage.getItem( 'DATABASE' ) != null ) {
+
+                    return window.location.reload();
+  
+                  } else { return wait(); };
+
+                },2000 )
+                
+              };
           
-              Database.Delete_Database( api_key );
-
-              setTimeout( () => {
-
-                return window.location.reload();
-
-              },2000);
+              Database.Delete_Database( api_key ); wait();
 
             });
 
