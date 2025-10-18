@@ -1,6 +1,6 @@
 // import database_users -->
 
-const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbxK79fx49kI9hvFa2a3Hm4OgmnJeZCuR6s4gVi4TuoxtbiZKtE-d82XHiO0X5VS5mCR/exec";
+const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbz8x8Co6Oh58o_70D2O0uTcOvrEHsgPFs6qfvDoN8bOWEcK6vumXxBnF96Iuf6LD9m8/exec";
 
 const Database = {
 
@@ -58,6 +58,12 @@ const Database = {
     Delete_Database: ( api_key ) => {
 
         Database.Send_request( 'Delete_Database', 'DATABASE', '&api=' + api_key );
+
+    }, Update_Owners: ( indexs, owner ) => {
+
+        indexs = indexs.join(',');
+
+        Database.Send_request( 'Update_Owners', 'DATABASE', '&indexs=' + indexs + '&owner=' + owner );
 
     },
 

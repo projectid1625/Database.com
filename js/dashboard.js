@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const currentUser = localStorage.getItem("currentUser");
 
       const dbUsers = JSON.parse(dbUsersString);
-      const index = dbUsers.findIndex(user => user.username === currentUser);
+      const index = dbUsers.findIndex(user => user.username == currentUser);
 
       if ( index == -1 ) {
 
@@ -140,13 +140,35 @@ document.addEventListener("DOMContentLoaded", () => {
       
       if ( modalLabel.textContent.includes('username') ) {
 
-        const check = dbUsers.findIndex( user => user.username == newValue );
+        const check = dbUsers.findIndex( user => user.username.toLowerCase() == newValue.toLowerCase() );
 
         if ( check != -1 ) {
 
           showPopup('Sorry ! This Username is used...', 'error');
 
         } else {
+
+          var databases_conf = JSON.parse( sessionStorage.getItem( 'databases_conf' ) );
+
+          var changed_data = [];
+
+          databases_conf = databases_conf.map(
+            
+            (obj,index) => {
+
+              if ( obj.owner === currentUser ) {
+
+                changed_data.push( index );
+
+                return { ...obj, owner : newValue };
+
+              } return obj;
+            
+            }
+            
+          );
+          
+          sessionStorage.setItem( 'databases_conf', JSON.stringify( databases_conf ) );
 
           dbUsers[index].username = newValue;
           sessionStorage.setItem( 'Database_Users', JSON.stringify( dbUsers ) );
@@ -158,6 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
           cell = 'A' + cell;
 
           Database.Update_Data( 'Users', cell, newValue );
+
+          Database.Update_Owners( changed_data, newValue );
 
           showPopup( 'Username changed successfully', 'success' );
 
