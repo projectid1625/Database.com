@@ -61,6 +61,7 @@ function createHeaders() {
 
 // Add a new editable row
 function addRow() {
+
   let tbody = table.tBodies[0];
   if (!tbody) {
     tbody = table.createTBody();
@@ -73,6 +74,8 @@ function addRow() {
   deleteBtn.className = "delete-btn";
   deleteBtn.onclick = () => deleteRowAt(row.rowIndex - 1); // exclude header
   deleteBtnCell.appendChild(deleteBtn);
+
+  colCount = table.rows[0].cells.length - 1;
 
   for (let i = 0; i < colCount; i++) {
     const cell = row.insertCell();
@@ -87,7 +90,7 @@ function addRow() {
 
 // Add a new column (for 2D and 3D)
 function addColumn() {
-  colCount++;
+  colCount = table.rows[0].cells.length;
 
   // Add new header cell
   const headerRow = table.tHead.rows[0];
@@ -156,20 +159,27 @@ function buildTable() {
 }
 
 function deleteColumnAt(index) {
+  
   const table = document.getElementById("dbTable");
-  for (let i = 0; i < table.rows.length; i++) {
-    table.rows[i].deleteCell(index);
-  }
-
-  // Re-assign delete buttons to correct columns
   const headerRow = table.rows[0];
-  for (let j = 0; j < headerRow.cells.length; j++) {
-    const headerCell = headerRow.cells[j];
-    const deleteBtn = headerCell.querySelector(".delete-column");
-    if (deleteBtn) {
-      deleteBtn.onclick = () => deleteColumnAt(j);
-    }
-  }
+
+  if ( headerRow.cells.length > 2 ) {
+
+    for (let i = 0; i < table.rows.length; i++) {
+      table.rows[i].deleteCell(index);
+    };
+  
+    // Re-assign delete buttons to correct columns
+    for (let j = 1; j < headerRow.cells.length; j++) {
+      const headerCell = headerRow.cells[j];
+      const deleteBtn = headerCell.querySelector(".delete-btn");
+      if (deleteBtn) {
+        deleteBtn.onclick = () => deleteColumnAt(j);
+      }
+    };
+
+  };
+
 };
   
 function deleteRowAt(index) {
@@ -186,7 +196,13 @@ addColumnBtn.addEventListener("click", addColumn);
 // Start building
 buildTable();
 
-document.getElementById("saveBtn").addEventListener("click", () => {
+const Save_btn = document.getElementById("saveBtn");
+
+Save_btn.addEventListener("click", () => {
+
+  Save_btn.disabled = true;
+  Save_btn.style.cursor = "not-allowed";
+
   const headers = [];
   const headerRow = table.tHead.rows[0];
   for (let i = 1; i < headerRow.cells.length; i++) {

@@ -335,11 +335,12 @@ window.onload = () => {
   
                   } else { return wait(); };
 
-                },2000 )
+                },1000 )
                 
               };
           
-              Database.Delete_Database( api_key ); wait();
+              Database.Delete_Database( api_key ); delete_button.disabled = true;
+              delete_button.style.cursor = "not-allowed"; wait();
 
             });
 
