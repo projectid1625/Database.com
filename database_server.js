@@ -1,6 +1,6 @@
 // import database_users -->
 
-const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbz8x8Co6Oh58o_70D2O0uTcOvrEHsgPFs6qfvDoN8bOWEcK6vumXxBnF96Iuf6LD9m8/exec";
+const WEB_APP_URL ="https://script.google.com/macros/s/AKfycbx0IexxamD_hdhmusdY_B71s9N6RpTJ81JnRtFNoQmgjT6y9C5xqeu9j4idrSA1CDwD/exec";
 
 const Database = {
 
